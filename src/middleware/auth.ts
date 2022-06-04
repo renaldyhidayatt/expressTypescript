@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import JwtPkg from '../pkg/jwt';
-import serviceAuth from '../service/service.auth';
+import JwtPkg from '../utils/jwt';
+import serviceAuth from '../service/service.user';
 
 function AuthMiddleware(req: Request, res: Response, next: NextFunction) {
     let token

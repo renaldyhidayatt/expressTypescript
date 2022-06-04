@@ -1,9 +1,9 @@
 import { Response, Request, NextFunction } from 'express';
-import Category from '../models/model.category';
+import serviceCategory from '../service/service.category';
 
 class CategoryController {
     async getAllCategories(req: Request, res: Response, next: NextFunction) {
-        const categories = await Category.find();
+        const categories = serviceCategory.getAllCategories();
         if (!categories) {
             return res.status(400).send({
                 message: "No categories found"
@@ -13,7 +13,7 @@ class CategoryController {
     }
 
     async getCategory(req: Request, res: Response, next: NextFunction) {
-        const category = await Category.findById(req.params.id);
+        const category = serviceCategory.getCategory(req.params.id);
         if (!category) {
             return res.status(400).send({
                 message: "Category not found"
@@ -23,13 +23,7 @@ class CategoryController {
     }
 
     async createCategory(req: Request, res: Response, next: NextFunction) {
-        let category = new Category({
-            name: req.body.name,
-            icon: req.body.icon,
-            color: req.body.color
-        })
-
-        category = await category.save();
+        const category = serviceCategory.createCategory(req.body);
 
         if (!category) {
             return res.status(400).send({
@@ -41,11 +35,7 @@ class CategoryController {
     }
 
     async updateCategory(req: Request, res: Response, next: NextFunction) {
-        const category = await Category.findByIdAndUpdate(req.params.id, {
-            name: req.body.name,
-            icon: req.body.icon,
-            color: req.body.color
-        })
+        const category = serviceCategory.updateCategory(req.params.id, req.body);
 
         if (!category) {
             return res.status(400).send({
@@ -57,7 +47,7 @@ class CategoryController {
     }
 
     async deleteCategory(req: Request, res: Response, next: NextFunction) {
-        const category = await Category.findByIdAndRemove(req.params.id);
+        const category = serviceCategory.deleteCategory(req.params.id);
 
         if (!category) {
             return res.status(400).send({

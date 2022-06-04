@@ -1,7 +1,4 @@
-import { Document } from 'mongoose';
-
-
-export interface UserDocument extends Document {
+export interface IUser {
     name: string;
     email: string;
     passwordHash: string;
@@ -11,4 +8,9 @@ export interface UserDocument extends Document {
     zip: string;
     city: string;
     country: string;
+}
+
+export interface IAuth{
+    email: string;
+    password: string;
 }
